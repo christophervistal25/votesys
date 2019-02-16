@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Student;
-use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller;
-use App\StudentInfo;
+use App\Http\Controllers\Controller;
 use App\Repositories\StudentRepository;
+use App\StudentInfo;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {

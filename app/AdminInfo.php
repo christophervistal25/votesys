@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 class AdminInfo extends Model
 {
 	public $timestamps = false;
-	protected $table = 'admin_info';
+    protected $table = 'admin_info';
+    
     /**
      * The attributes that are mass assignable.
-     *
+     *`
      * @var array
      */
     protected $fillable = [

@@ -27,6 +27,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->register(Urameshibr\Providers\FormRequestServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -59,13 +61,15 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    // App\Http\Middleware\ExampleMiddleware::class
+]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+   // 'auth' => App\Http\Middleware\Authenticate::class,
+   'is_there_position' => App\Http\Middleware\IsTherePosition::class,
+   'is_there_candidate' => App\Http\Middleware\IsThereCandidate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------

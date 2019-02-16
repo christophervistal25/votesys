@@ -17,7 +17,7 @@ class AdminRepository
      * @param string $username
      * @return Admin
      */
-    public function getInfoByUsername(string $username) :Admin
+    public function getInfoByUsername(string $username) 
     {
         return $this->admin->where('username',$username)->first() ?? null;
     }
@@ -36,6 +36,5 @@ class AdminRepository
             return Hash::check($password, $admin->password);
        }
        return false;
-
     }
 }

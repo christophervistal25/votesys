@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Http\Request;
-use App\VoteStatus;
+use App\Http\Controllers\Controller;
 use App\Repositories\VoteStatusRepository;
+use App\VoteStatus;
+use Illuminate\Http\Request;
 
 
 class VoteStatusController extends Controller

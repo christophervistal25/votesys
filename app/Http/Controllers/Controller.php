@@ -1,22 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Position;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
-
-
-
-class PositionController extends Controller
+class Controller extends BaseController
 {
-	public function create()
-	{
-		return view('admin.position.create');
-	}
-
-	public function store()
-	{
-
-	}
 
 }

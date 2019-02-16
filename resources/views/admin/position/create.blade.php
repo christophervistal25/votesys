@@ -1,7 +1,7 @@
 <form method="POST">
 	<fieldset class="form-group" >
 		<label for="formGroupExampleInput">Example label</label>
-		<input name="position" type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+		<input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
 	</fieldset>
 	<fieldset class="form-group">
 		<label for="formGroupExampleInput2">Another label</label>

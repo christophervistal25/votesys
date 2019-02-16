@@ -1,40 +1,45 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Http\Request;
-use App\Position;
 use App\Candidate;
-use App\StudentInfo;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCandidateRequest;
+use App\Position;
 use App\Repositories\CandidateRepository;
+use App\Repositories\PositionRepository;
+use App\StudentInfo;
+use Illuminate\Http\Request;
 
 class CandidateController extends Controller
 {
 
-    public function __construct(Candidate $candidate , CandidateRepository $candidateRepository)
+    public function __construct(CandidateRepository $candidateRepository , PositionRepository $positionRepo)
     {
-        $this->candidate = $candidate;
         $this->candidateRepository = $candidateRepository;
+        $this->positionRepository = $positionRepo;
     }
 
     public function index()
     {
-        $candidates = $this->candidate::with(['studentInfo','position'])->get();
+        $candidates = $this->candidateRepository
+                            ->getCandidatesWithInfo();
         return view('admin.candidate.index',compact('candidates'));
     }
 
     public function create()
     {
-        $positions = Position::all();
-        $students = StudentInfo::all();
-        return view('admin.candidate.create',compact('positions','students'));
+        $need_data = [
+            'positions' => Position::all(),
+            'students' => StudentInfo::all(),
+        ];
+        return view('admin.candidate.create',compact('need_data'));
+
     }
 
-    public function store(Request $request)
+    public function store(StoreCandidateRequest $request)
     {
-    	if (!$this->candidateRepository->alreadyExists($request->student_id)) {
-    		return $this->candidateRepository->createCandidate($request->all());
-    	} else {
-            dd('Candidate is already exists');
-    	}
+        $this->candidateRepository
+              ->createCandidate($request->all());
+        return redirect()->route('candidate.index');
     }
 }

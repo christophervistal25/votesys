@@ -1,32 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Http\Request;
 use App\Admin;
+use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(Admin $admin,AdminRepository $adminRepo)
+    public function __construct(AdminRepository $adminRepo)
     {
-        $this->admin = $admin;
         $this->adminRepo = $adminRepo;
     }
-    
+
 
 
     public function showLogin()
     {
         return view('admin.login');
     }
-    
+
 
     public function checkUser(Request $request)
     {
         $isAuthorize = $this->adminRepo
                             ->verify($request->username,$request->password);
         if ($isAuthorize) {
-            dd('good');
+            return redirect()->route('admin.dashboard');
         } else {
             dd('Please check your username or password');
         }

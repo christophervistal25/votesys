@@ -1,29 +1,42 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePositionRequest;
 use App\Position;
 use App\Repositories\PositionRepository;
+use Illuminate\Http\Request;
 
 
 class PositionController extends Controller
 {
 
-    public function __construct(PositionRepository $positionRepo)
+    public function __construct(PositionRepository $positionRepository)
     {
-        $this->positionRepo = $positionRepo;
+        $this->positionRepository  = $positionRepository;
     }
 
 
     public function index()
     {
-        $positions = Position::all();
+        $positions = $this->positionRepository
+                           ->position::all();
         return view('admin.position.index',compact('positions'));
     }
 
     public function edit($id)
     {
-        return $this->positionRepo->getPositionById($id);
+        $position = $this->positionRepository->getPositionById($id);
+        return view('admin.position.edit',compact('position'));
+
+
+    }
+
+    public function update($id , Request $request)
+    {
+        if($this->positionRepository->updatePosition($id , $request->all())) {
+            return redirect()->route('position.index');
+        }
     }
 
     public function create()
@@ -31,20 +44,15 @@ class PositionController extends Controller
         return view('admin.position.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
-        if (!$this->positionRepo->alreadyExists($request->position)) {
-            return $this->positionRepo
+         return $this->positionRepository
                          ->createNewPosition($request->all());
-        } else {
-            //display warning message here that the position is already exists
-            dd('Already exists');
-        }
     }
 
     public function destroy(int $id)
     {
-        return $this->positionRepo
+        return $this->positionRepository
                     ->deletePosition($id);
     }
 
