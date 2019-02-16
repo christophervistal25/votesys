@@ -31,5 +31,10 @@ class Candidate extends Model
         return $this->belongsToMany('App\Student','student_vote','candidate_id','student_id');
     }
 
+    public function positionOfCandidate()
+    {
+        return $this->belongsToMany('App\Candidate');
+    }
+
 
 }

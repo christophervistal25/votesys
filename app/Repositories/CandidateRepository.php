@@ -51,7 +51,7 @@ class CandidateRepository
     public function candidatesWithVote()
     {
         return $this->candidate
-                     ->with('votes')->get();
+                     ->with(['studentInfo','votes'])->get();
     }
 
     /**

@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Repositories\PositionRepository;
+use Closure;
+use Illuminate\Support\Facades\URL;
 class IsTherePosition
 {
 
@@ -21,8 +22,12 @@ class IsTherePosition
     public function handle($request, Closure $next)
     {
         if ($this->positionRepository->isThereAnyPosition()) {
+            flushMessage('status');
             return $next($request);
         } else {
+            if (strpos(URL::current(), '/admin/candidate/create') !== false) {
+                setFlashMessage('status','Please add some position first.');
+            }
             return redirect()->route('admin.dashboard');
         }
     }

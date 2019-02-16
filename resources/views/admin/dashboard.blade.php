@@ -1,16 +1,28 @@
-@if (!$current_state_of_voting)
-	<a href="/admin/candidate/create">Add new candidate</a>
-	<br>
-	<a href="/admin/candidates">Candidates</a>
-	<br>
-	<a href="/admin/position/create">Add new position</a>
-	<br>
-	<a href="/admin/positions">Positions</a>
-	<br>
-	<a href="/admin/voting">View</a>
-	<br>
-	<form method="POST" >
-		<input type="submit" value="Start vote">
-	</form>
+@extends('admin.templates.master',[
+	'title' => ucfirst(last(explode('/',URL::current()))),
+	'voting_state' => getCurrentStateOfVote(),
+	'admin' => getAdminInfo()
+])
+
+@section('content')
+@if (hasMessage('status'))
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<strong style="color:#fff;">{{ getFlashMessage('status') }}</strong>
+	</div>
 @endif
-<p>Vote status : {{ (!$current_state_of_voting) ? 'Closed' : 'Open'  }}</p>
+
+<div class="row">
+	<div class="col-md-6">
+		<h5 class="text-capitalize">Vote status : <b> {{ (getCurrentStateOfVote())  }}</b></h5>
+	</div>
+	@if (getCurrentStateOfVote() === 'closed')
+	<div class="pull-right">
+		<form method="POST">
+			<input type="submit" class="text-capitalize btn btn-primary" value="Start the voting">
+		</form>
+	</div>
+	@endif
+</div>
+@endsection

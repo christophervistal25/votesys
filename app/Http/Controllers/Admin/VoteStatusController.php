@@ -18,7 +18,7 @@ class VoteStatusController extends Controller
    public function update()
    {
    		$this->voteRepo->changeState();
-		return redirect('/admin/dashboard');
+		return redirect()->route('admin.dashboard');
    }
 
 }

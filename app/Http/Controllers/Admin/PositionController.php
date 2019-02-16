@@ -46,14 +46,17 @@ class PositionController extends Controller
 
     public function store(StorePositionRequest $request)
     {
-         return $this->positionRepository
+        $this->positionRepository
                          ->createNewPosition($request->all());
+        setFlashMessage('status','Successfully add new position');
+        return redirect()->route('position.index');
     }
 
     public function destroy(int $id)
     {
-        return $this->positionRepository
+        $this->positionRepository
                     ->deletePosition($id);
+        return redirect()->route('position.index');
     }
 
 }

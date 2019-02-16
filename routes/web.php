@@ -4,6 +4,7 @@ use App\Candidate;
 $router->group(['prefix' => 'admin'] , function () use ($router) {
 
 $router->get('dashboard', ['uses' => 'Admin\AdminController@index', 'as' => 'admin.dashboard']);
+$router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
 $router->post('dashboard', ['uses' => 'Admin\VoteStatusController@update', 'as' => 'votestatus.update']);
 
 $router->group(['middleware' => 'is_there_candidate'] , function () use ($router) {
@@ -27,6 +28,7 @@ $router->group(['middleware' => 'is_there_position'] , function () use ($router)
 
 
     $router->get('voting', ['uses' => 'Admin\VotingController@index', 'as' => 'voting.index']);
+    $router->get('newvotes', ['uses' => 'Admin\VotingController@getVotes', 'as' => 'voting.show']);
 });
 
 $router->get('/', ['uses' => 'Admin\AuthController@showLogin', 'as' => 'login']);

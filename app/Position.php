@@ -16,4 +16,9 @@ class Position extends Model
     ];
 
 
+    public function candidate()
+    {
+    	return $this->hasMany('App\Candidate','position_id');
+    }
+
 }

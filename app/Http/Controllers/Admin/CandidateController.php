@@ -40,6 +40,7 @@ class CandidateController extends Controller
     {
         $this->candidateRepository
               ->createCandidate($request->all());
+            setFlashMessage('status','Successfully add new candidate.');
         return redirect()->route('candidate.index');
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Admin;
+use App\AdminInfo;
 use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
 use App\Repositories\VoteStatusRepository;
 use App\VoteStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -18,9 +20,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $current_state_of_voting = $this->voteRepo
-                                         ->getCurrentState();
-        return view('admin.dashboard',compact('vote_status','current_state_of_voting'));
+        return view('admin.dashboard');
     }
 
 }

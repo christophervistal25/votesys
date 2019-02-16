@@ -15,16 +15,18 @@ class StudentSeeder extends Seeder
     public function run()
     {
         $student_ids = range(1501755,1501770);
+        $i = 0;
         foreach ($student_ids as $value) {
+            $i++;
         	Student::create([
         		'student_id' => $value,
         		'password' => Hash::make(1234),
         	]);
         	StudentInfo::create([
 				'student_id' => $value,
-				'firstname'  => 'john' . $value,
-				'middlename' => 'doe' . $value,
-				'lastname'   => 'al' . $value,
+				'firstname'  => $i . 'John',
+				'middlename' => 'Doe',
+				'lastname'   => 'Al',
         	]);
         }
     }

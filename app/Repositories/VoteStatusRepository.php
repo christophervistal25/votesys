@@ -9,14 +9,14 @@ class VoteStatusRepository
     {
         $this->vote_status = $vote_status;
     }
-    
+
     /**
      * Get the current state of voting
      * @return void
      */
     public function getCurrentState()
     {
-      return (boolean) $this->vote_status->where('status','open')->first() ?? null;
+      return $this->vote_status->first()->status;
     }
 
 
