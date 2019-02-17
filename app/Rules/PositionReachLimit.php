@@ -31,6 +31,6 @@ class PositionReachLimit implements Rule
      */
     public function message()
     {
-        return 'Reach the maximum candidate for this position';
+        return 'Reach the maximum candidate for this position.';
     }
 }

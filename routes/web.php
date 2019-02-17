@@ -4,8 +4,8 @@ use App\Candidate;
 $router->group(['prefix' => 'admin'] , function () use ($router) {
 
 $router->get('dashboard', ['uses' => 'Admin\AdminController@index', 'as' => 'admin.dashboard']);
-$router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
 $router->post('dashboard', ['uses' => 'Admin\VoteStatusController@update', 'as' => 'votestatus.update']);
+$router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
 
 $router->group(['middleware' => 'is_there_candidate'] , function () use ($router) {
         $router->get('candidates', [ 'uses' => 'Admin\CandidateController@index', 'as' => 'candidate.index']);
@@ -27,8 +27,9 @@ $router->group(['middleware' => 'is_there_position'] , function () use ($router)
 
 
 
-    $router->get('voting', ['uses' => 'Admin\VotingController@index', 'as' => 'voting.index']);
-    $router->get('newvotes', ['uses' => 'Admin\VotingController@getVotes', 'as' => 'voting.show']);
+    $router->post('latestvotes', ['uses' => 'Admin\VotingController@getLatestVotes', 'as' => 'voting.show']);
+    $router->get('voting', ['middleware' => 'is_voting_open','uses' => 'Admin\VotingController@index', 'as' => 'voting.index']);
+    $router->get('newvotes', ['uses' => 'Admin\VotingController@getNewVotes', 'as' => 'voting.show']);
 });
 
 $router->get('/', ['uses' => 'Admin\AuthController@showLogin', 'as' => 'login']);

@@ -26,4 +26,15 @@ class StorePositionRequest extends FormRequest
 			'limit' => 'required',
 		];
 	}
+
+	public function response(array $errors)
+	{
+		$errors = array_flatten($errors);
+		foreach ($errors as &$value) {
+			$value = preg_replace('/name/', 'position', $value);
+		}
+		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
+		setFlashMessage('errors',$errors);
+		return redirect()->route('position.create');
+	}
 }

@@ -36,6 +36,6 @@ class PositionExists implements Rule
      */
     public function message()
     {
-        return 'Position is already exists';
+        return 'Position is already exists.';
     }
 }

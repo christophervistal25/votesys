@@ -6,7 +6,17 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  <script>
+          window.myApp = {
+         	'last_vote' : '{{ \DB::table('student_vote')
+         	         	                             ->orderBy('created_at','desc')
+         	         	                             ->first()->created_at ?? 0 }}'
+          };
+        </script>
 		<title>Vote Sys | {{ $title }}</title>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.amaran/0.5.4/amaran.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="{{ URL::asset('/bootstrap/dist/css/bootstrap.min.css') }}">
 		<!-- Font Awesome -->
@@ -58,12 +68,17 @@
 									<li><a href="/admin/positions" class="text-capitalize">positions</a></li>
 								</ul>
 							</li>
+							@else
+							<li>
+								<a>
+									<i class="fa fa-bar-chart-o"></i>Voting<span class="fa fa-chevron-down"></span>
+								</a>
+								<ul class="nav child_menu">
+									<li><a href="/admin/voting">View</a></li>
+								</ul>
+							</li>
 							@endif
-							<li><a><i class="fa fa-bar-chart-o"></i>Voting<span class="fa fa-chevron-down"></span></a>
-							<ul class="nav child_menu">
-								<li><a href="/admin/voting">View</a></li>
-							</ul>
-						</li>
+
 
 					</ul>
 				</div>
@@ -139,6 +154,9 @@
 <script src="{{ URL::asset('fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ URL::asset('nprogress/nprogress.js') }}"></script>
 <script src="{{ URL::asset('js/custom.min.js') }}"></script>
-<script src="{{ URL::asset('custom.js') }}"></script>
+	@if ($voting_state === 'open')
+		<script src="{{ URL::asset('trackvotes.js') }}"></script>
+	@endif
+<script src="//cdn.jsdelivr.net/jquery.amaran/0.5.4/jquery.amaran.min.js"></script>
 </body>
 </html>

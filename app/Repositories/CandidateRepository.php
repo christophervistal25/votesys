@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Repositories;
-use App\Position;
 use App\Candidate;
+use App\Position;
 use Illuminate\Support\Facades\Hash;
 
 class CandidateRepository

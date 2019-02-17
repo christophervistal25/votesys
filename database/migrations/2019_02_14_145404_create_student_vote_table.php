@@ -17,6 +17,7 @@ class CreateStudentVoteTable extends Migration
             $table->integer('student_id');
             $table->integer('candidate_id');
             $table->primary(['student_id','candidate_id']);
+            $table->timestamps();
         });
     }
 

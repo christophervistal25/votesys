@@ -11,6 +11,9 @@
 		</button>
 		<strong style="color:#fff;">{{ getFlashMessage('status') }}</strong>
 	</div>
+	@php
+		flushMessage('status');
+	@endphp
 @endif
 
 <div class="row">

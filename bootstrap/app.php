@@ -69,6 +69,7 @@ $app->routeMiddleware([
    'auth' => App\Http\Middleware\Authenticate::class,
    'is_there_position' => App\Http\Middleware\IsTherePosition::class,
    'is_there_candidate' => App\Http\Middleware\IsThereCandidate::class,
+   'is_voting_open' => App\Http\Middleware\IsVotingOpen::class,
 ]);
 
 /*
