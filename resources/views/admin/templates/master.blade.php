@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		  <script>
           window.myApp = {
+          	'image_path' : '{{ URL::asset('images/') }}',
          	'last_vote' : '{{ \DB::table('student_vote')
          	         	                             ->orderBy('created_at','desc')
          	         	                             ->first()->created_at ?? 0 }}'
@@ -100,8 +101,8 @@
 							<span class=" fa fa-angle-down"></span>
 						</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
-							<li><a href="javascript:;"> Profile</a></li>
-							<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+							<li><a href="/admin/profile"> Settings</a></li>
+							<li><a href=""><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 						</ul>
 					</li>
 				</ul>

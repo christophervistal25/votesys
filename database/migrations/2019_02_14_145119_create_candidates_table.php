@@ -18,6 +18,7 @@ class CreateCandidatesTable extends Migration
             $table->integer('student_id');
             $table->integer('position_id');
             $table->text('platforms');
+            $table->string('profile')->default('no_image.png');
         });
     }
 

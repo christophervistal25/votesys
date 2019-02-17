@@ -11,11 +11,14 @@
             @foreach ($candidates as $candidate)
                 @if ($position->id === $candidate->position_id)
                     <div class="flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
                         <div class="tile-stats">
-                            <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                            <div class="count">{{ $candidate->votes->count() }}</div>
-                            <div class="count">{{ucfirst($candidate->studentInfo->lastname) }} , {{ucfirst($candidate->studentInfo->firstname)}} {{ucfirst(substr($candidate->studentInfo->middlename,0,1))}}.</div>
-                            {{-- <small>Platforms : {{ $candidate->platforms }}</small> --}}
+                            <div class="text-center">
+                                <img src="{{ URL::asset('images/' .  $candidate->profile ) }}" alt="..." class="img-circle img-responsive profile_img text-center">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="text-center  count">{{ $candidate->votes->count() }}</div>
+                            <div class="count text-center">{{ucfirst($candidate->studentInfo->lastname) }} , {{ucfirst($candidate->studentInfo->firstname)}} {{ucfirst(substr($candidate->studentInfo->middlename,0,1))}}.</div>
                         </div>
                     </div>
                 @endif

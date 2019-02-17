@@ -12,7 +12,7 @@ class Candidate extends Model
      * @var array
      */
     protected $fillable = [
-        'student_id', 'position_id','platforms'
+        'student_id', 'position_id','platforms','profile'
     ];
 
     public function studentInfo()

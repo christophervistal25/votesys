@@ -14,7 +14,7 @@
 		flushMessage('errors');
 	@endphp
 @endif
-<form method="POST" enctype="multipart/formdata">
+<form method="POST" enctype="multipart/form-data">
 	<div class="row">
 		<div class="col-md-12">
 			<label>Select Student : </label>
@@ -48,7 +48,7 @@
 	<div class="row">
 		<div class="col-md-12" style="margin-top : 1vw;">
 			<label>Profile : </label>
-			<input type="file" name="candidate_profile">
+			<input type="file" name="profile">
 		</div>
 	</div>
 	<input type="submit" value="Add candidate" class="btn btn-primary pull-right">

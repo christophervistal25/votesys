@@ -41,6 +41,7 @@ let isInVotingURL = () => {
 
 
 let displayDataInVotingURL = (data) => {
+		let imgDir = window.myApp.image_path;
  		let element = "";
  		//append the new votes
  		votesElement.innerHTML = null;
@@ -52,7 +53,7 @@ let displayDataInVotingURL = (data) => {
  			data.candidates.forEach((candidate, keys) => {
  				//grouping
  				if (position.id == candidate.position_id) {
- 					element += '<div class="flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12"><div class="tile-stats"><div class="icon"><i class="fa fa-check-square-o"></i></div><div class="count">'+candidate.votes.length+'</div><div class="count">'+candidate.student_info.lastname+' , '+candidate.student_info.firstname+' '+candidate.student_info.middlename.substring(0,1)+'.</div></div></div>';
+ 					element += '<div class="flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12"><div class="tile-stats"><div class="text-center"><img src="'+imgDir +'/'+ candidate.profile +'" alt="..." class="img-circle img-responsive profile_img text-center"></div><div class="clearfix"></div><div class="text-center count">'+candidate.votes.length+'</div><div class="text-center count">'+candidate.student_info.lastname+' , '+candidate.student_info.firstname+' '+candidate.student_info.middlename.substring(0,1)+'.</div></div></div>';
  				}
  			});
  			//closing the tiles set up

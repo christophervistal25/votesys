@@ -1,7 +1,13 @@
 <?php
+use App\Admin;
 use App\AdminInfo;
 
-function getAdminInfo()
+function getAdminInfo(array $columns = ['*'])
 {
-	return AdminInfo::first();
+	return AdminInfo::first($columns);
+}
+
+function getAdminCredentials(array $columns = ['*'])
+{
+	return Admin::first($columns);
 }

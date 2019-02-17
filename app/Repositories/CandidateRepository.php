@@ -3,6 +3,7 @@
 namespace App\Repositories;
 use App\Candidate;
 use App\Position;
+use App\Student;
 use Illuminate\Support\Facades\Hash;
 
 class CandidateRepository
@@ -73,8 +74,25 @@ class CandidateRepository
      */
     public function createCandidate(array $information) : Candidate
     {
+        $this->changeProfile($information);
+        //check is set and override the profile name
+        $information['profile'] = !empty($information['profile'])
+        ? $information['profile']->getClientOriginalName() : 'no_image.png';
         return $this->candidate
                     ->create($information);
+    }
+
+    /**
+     * [isAdminWantToChangeProfile if the admin want to change profile]
+     * @param  [type]  $items [description]
+     * @return boolean        [description]
+     */
+    private function changeProfile($items)
+    {
+        if (isset($items['profile'])) {
+            $image = $items['profile']->getClientOriginalName();
+            $items['profile']->move(base_path('/public/images'),$image);
+        }
     }
 
 }

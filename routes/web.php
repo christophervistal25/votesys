@@ -6,6 +6,8 @@ $router->group(['prefix' => 'admin'] , function () use ($router) {
 $router->get('dashboard', ['uses' => 'Admin\AdminController@index', 'as' => 'admin.dashboard']);
 $router->post('dashboard', ['uses' => 'Admin\VoteStatusController@update', 'as' => 'votestatus.update']);
 $router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
+$router->get('profile', ['uses' => 'Admin\AdminController@show', 'as' => 'profile.show']);
+$router->post('profile', ['uses' => 'Admin\AdminController@update', 'as' => 'profile.update']);
 
 $router->group(['middleware' => 'is_there_candidate'] , function () use ($router) {
         $router->get('candidates', [ 'uses' => 'Admin\CandidateController@index', 'as' => 'candidate.index']);
