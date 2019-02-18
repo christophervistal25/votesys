@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Response;
 use App\Repositories\AdminRepository;
 use App\Rules\isPasswordCorrect;
 use Urameshibr\Requests\FormRequest;
@@ -9,6 +10,7 @@ use Urameshibr\Requests\FormRequest;
 
 class UpdateInformationRequest extends FormRequest
 {
+	use Response;
 	public function __construct(AdminRepository $adminRepo)
 	{
 		$this->adminRepostiory = $adminRepo;
@@ -51,10 +53,9 @@ class UpdateInformationRequest extends FormRequest
 
 	public function response(array $errors)
 	{
-		$errors = array_flatten($errors);
-		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
-		setFlashMessage('errors',$errors);
-		return redirect()->route('profile.show');
+		return $this->setErrors($errors)
+		     ->displayErrors()
+		     ->toRoute('profile.show');
 	}
 
 }

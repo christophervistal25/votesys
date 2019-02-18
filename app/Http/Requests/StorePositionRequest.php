@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PositionExists;
+use App\Helpers\Response;
 use App\Repositories\PositionRepository;
+use App\Rules\PositionExists;
 use Urameshibr\Requests\FormRequest;
-
 
 class StorePositionRequest extends FormRequest
 {
+	use Response;
 	public function __construct(PositionRepository $position)
 	{
 		$this->position = $position;
@@ -30,12 +31,9 @@ class StorePositionRequest extends FormRequest
 
 	public function response(array $errors)
 	{
-		$errors = array_flatten($errors);
-		foreach ($errors as &$value) {
-			$value = preg_replace('/name/', 'position', $value);
-		}
-		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
-		setFlashMessage('errors',$errors);
-		return redirect()->route('position.create');
+		return $this->setErrors($errors)
+			->findAndReplaceErrorMessage('/name/','position')
+		     ->displayErrors()
+		     ->toPreviousPage();
 	}
 }

@@ -5,10 +5,12 @@ namespace App\Http\Requests;
 use App\Rules\PositionReachLimit;
 use App\Repositories\PositionRepository;
 use Urameshibr\Requests\FormRequest;
-
+use App\Helpers\Response;
 
 class StoreCandidateRequest extends FormRequest
 {
+	use Response;
+
 	public function __construct(PositionRepository $position)
 	{
 		$this->position = $position;
@@ -30,12 +32,9 @@ class StoreCandidateRequest extends FormRequest
 
 	public function response(array $errors)
 	{
-		$errors = array_flatten($errors);
-		foreach ($errors as &$value) {
-			$value = preg_replace('/student id.+/', 'student is already a candidate.', $value);
-		}
-		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
-		setFlashMessage('errors',$errors);
-		return redirect()->route('candidate.create');
+		return $this->setErrors($errors)
+			->findAndReplaceErrorMessage('/student id.+/','student is already a candidate')
+		     ->displayErrors()
+		     ->toRoute('candidate.create');
 	}
 }

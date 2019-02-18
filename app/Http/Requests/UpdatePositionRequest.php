@@ -5,9 +5,11 @@ namespace App\Http\Requests;
 use App\Repositories\PositionRepository;
 use Illuminate\Support\Facades\URL;
 use Urameshibr\Requests\FormRequest;
+use App\Helpers\Response;
 
 class UpdatePositionRequest extends FormRequest
 {
+	use Response;
 
 	public function __construct(PositionRepository $positionRepo)
 	{
@@ -28,17 +30,16 @@ class UpdatePositionRequest extends FormRequest
 		];
 	}
 
+	/**
+	 * Redirect and give the error message
+	 * @param  array  $errors [description]
+	 * @return [type]         [description]
+	 */
 	public function response(array $errors)
 	{
-		//refactor this
-		$errors = array_flatten($errors);
-		foreach ($errors as &$value) {
-			$value = preg_replace('/name/', 'position', $value);
-		}
-		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
-		//set flash message
-		setFlashMessage('errors',$errors);
-		$previous_url = $_SERVER['HTTP_REFERER'];
-		return redirect($previous_url);
+		return $this->setErrors($errors)
+			->findAndReplaceErrorMessage('/name/','position')
+		     ->displayErrors()
+		     ->toPreviousPage();
 	}
 }
