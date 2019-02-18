@@ -22,10 +22,18 @@
 		</div>
 	</div>
 </div>
+<br>
 <div class="form-group">
 	<div class="row">
 		<div class="col-md-12"><label >No. of can run</label>
 		<input name="limit" type="number" class="form-control" placeholder="No. of candidate that can run">
+	</div>
+</div>
+<br>
+<div class="form-group">
+	<div class="row">
+		<div class="col-md-12"><label >Student can vote : </label>
+		<input name="student_can_vote" type="number" class="form-control" placeholder="Students can vote">
 	</div>
 </div>
 </div>

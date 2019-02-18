@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PositionExists;
 use App\Repositories\PositionRepository;
+use Illuminate\Support\Facades\URL;
 use Urameshibr\Requests\FormRequest;
 
-
-class StorePositionRequest extends FormRequest
+class UpdatePositionRequest extends FormRequest
 {
-	public function __construct(PositionRepository $position)
+
+	public function __construct(PositionRepository $positionRepo)
 	{
-		$this->position = $position;
+		$this->positionRepository = $positionRepo;
 	}
 
 	public function authorize()
@@ -22,7 +22,7 @@ class StorePositionRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => ['required',new PositionExists($this->position)],
+			'name' => ['required'],
 			'limit' => 'required',
 			'student_can_vote' => 'required',
 		];
@@ -30,12 +30,15 @@ class StorePositionRequest extends FormRequest
 
 	public function response(array $errors)
 	{
+		//refactor this
 		$errors = array_flatten($errors);
 		foreach ($errors as &$value) {
 			$value = preg_replace('/name/', 'position', $value);
 		}
 		$errors = rtrim(str_replace('.'," , ", implode('',$errors)),' , ');
+		//set flash message
 		setFlashMessage('errors',$errors);
-		return redirect()->route('position.create');
+		$previous_url = $_SERVER['HTTP_REFERER'];
+		return redirect($previous_url);
 	}
 }

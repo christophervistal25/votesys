@@ -1,6 +1,5 @@
 <?php
 
-
 function setFlashMessage(string $key , string $message)
 {
 	if (session_id() == null) {

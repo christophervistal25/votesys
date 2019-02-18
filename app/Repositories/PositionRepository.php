@@ -35,6 +35,11 @@ class PositionRepository
       return $this->position->find($id);
     }
 
+    public function getPositionByName(string $name) : Position
+    {
+        return $this->position->where('name',$name)->first();
+    }
+
      public function alreadyExists(string $name) :bool
     {
         return  $this->position
@@ -76,8 +81,8 @@ class PositionRepository
      */
     public function updatePosition(int $id , array $info) : bool
     {
-      return $position_information = $this->getPositionById($id)
-                                    ->update($info);
+      return $this->getPositionById($id)
+                            ->update($info);
     }
 
      /**

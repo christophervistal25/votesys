@@ -33,7 +33,7 @@
 				<div class="col-md-3 left_col">
 					<div class="left_col scroll-view">
 						<div class="navbar nav_title" style="border: 0;">
-							<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Voting system</span></a>
+							<a href="/admin/dashboard" class="site_title"><i class="fa fa-users"></i> <span>Voting system</span></a>
 						</div>
 						<div class="clearfix"></div>
 						<!-- menu profile quick info -->
@@ -102,7 +102,7 @@
 						</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
 							<li><a href="/admin/profile"> Settings</a></li>
-							<li><a href=""><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+							<li><a href="/"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 						</ul>
 					</li>
 				</ul>

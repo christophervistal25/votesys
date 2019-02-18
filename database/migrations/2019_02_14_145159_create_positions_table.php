@@ -17,6 +17,7 @@ class CreatePositionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('limit');
+            $table->integer('student_can_vote')->default(1);
         });
     }
 

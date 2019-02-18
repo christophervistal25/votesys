@@ -27,7 +27,8 @@
         "files": [
             "app/Helpers/FlashMessage.php",
             "app/Helpers/VoteState.php",
-            "app/Helpers/AdminHelper.php"
+            "app/Helpers/AdminHelper.php",
+            "app/Helpers/Response.php"
         ]
     },
     "autoload-dev": {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePositionRequest;
+use App\Http\Requests\UpdatePositionRequest;
 use App\Position;
 use App\Repositories\PositionRepository;
 use Illuminate\Http\Request;
@@ -28,13 +29,12 @@ class PositionController extends Controller
     {
         $position = $this->positionRepository->getPositionById($id);
         return view('admin.position.edit',compact('position'));
-
-
     }
 
-    public function update($id , Request $request)
+    public function update($id , UpdatePositionRequest $request)
     {
         if($this->positionRepository->updatePosition($id , $request->all())) {
+            setFlashMessage('status','Successfully edit ' . $request->name);
             return redirect()->route('position.index');
         }
     }

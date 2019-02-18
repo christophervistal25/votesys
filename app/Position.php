@@ -12,7 +12,7 @@ class Position extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'limit'
+        'name', 'limit','student_can_vote'
     ];
 
 
