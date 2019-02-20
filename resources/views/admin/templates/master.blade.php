@@ -75,7 +75,8 @@
 									<i class="fa fa-bar-chart-o"></i>Voting<span class="fa fa-chevron-down"></span>
 								</a>
 								<ul class="nav child_menu">
-									<li><a href="/admin/voting">View</a></li>
+									<li><a href="/admin/voting">View (in Real time)</a></li>
+									<li><a href="/admin/candidates/rank">View Ranks</a></li>
 								</ul>
 							</li>
 							@endif

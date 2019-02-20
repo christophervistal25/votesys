@@ -11,6 +11,7 @@ $router->post('profile', ['uses' => 'Admin\AdminController@update', 'as' => 'pro
 
 $router->group(['middleware' => 'is_there_candidate'] , function () use ($router) {
         $router->get('candidates', [ 'uses' => 'Admin\CandidateController@index', 'as' => 'candidate.index']);
+        $router->get('candidates/rank' , ['uses' => 'Admin\CandidateController@ranks' , 'as' => 'candidate.ranks']);
 });
 
 
@@ -38,7 +39,17 @@ $router->get('/', ['uses' => 'Admin\AuthController@showLogin', 'as' => 'login'])
 $router->post('/', ['uses' => 'Admin\AuthController@checkUser', 'as' => 'submit.login']);
 
 
-$router->post('/student/login', ['uses' => 'Student\AuthController@login', 'as' => 'student.login']);
+
+
+
+$router->group(['prefix' => 'api'] , function () use ($router) {
+    $router->post('/student/login', ['uses' => 'Student\AuthController@login', 'as' => 'student.login']);
+    $router->post('/student/register', ['uses' => 'Student\AuthController@register', 'as' => 'student.register']);
+    $router->post('/check/mac',['uses' => 'Student\AddressController@check' , 'as' => 'student.checkmac']);
+
+    $router->get('/candidates',['uses' => 'Student\CandidatesController@candidates' , 'as' => 'candidates.list']);
+    $router->post('/student/vote/',['uses' => 'Student\VoteController@vote', 'as' => 'student.vote']);
+});
 
 
 

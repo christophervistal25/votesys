@@ -43,4 +43,14 @@ class CandidateController extends Controller
             setFlashMessage('status','Successfully add new candidate.');
         return redirect()->route('candidate.index');
     }
+
+    public function ranks()
+    {
+        $candidates = $this->candidateRepository
+                ->getCandidatesWithVotesForRank();
+        $positions = $this->positionRepository
+                          ->position
+                          ->all();
+        return view('admin.candidate.ranks',compact('candidates','positions'));
+    }
 }

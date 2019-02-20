@@ -20,7 +20,7 @@ class StudentSeeder extends Seeder
             $i++;
         	Student::create([
         		'student_id' => $value,
-        		'password' => Hash::make(1234),
+        		// 'password' => Hash::make(1234),
         	]);
         	StudentInfo::create([
 				'student_id' => $value,

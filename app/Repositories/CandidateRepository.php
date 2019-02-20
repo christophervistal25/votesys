@@ -5,12 +5,26 @@ use App\Candidate;
 use App\Position;
 use App\Student;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class CandidateRepository
 {
     public function __construct(Candidate $candidate)
     {
         $this->candidate = $candidate;
+    }
+
+
+    /**
+     * [Fetch all candidates]
+     * @return [type] [description]
+     */
+    public function getAllCandidates()
+    {
+        if ($this->isThereAnyCandidate() <= 0) {
+            throw new Exception('There is no candidate.');
+        }
+        return $this->candidate->all();
     }
 
     /**
@@ -52,7 +66,8 @@ class CandidateRepository
     public function candidatesWithVote()
     {
         return $this->candidate
-                     ->with(['studentInfo','votes'])->get();
+                     ->with(['studentInfo','votes'])
+                     ->get();
     }
 
     /**
@@ -63,8 +78,20 @@ class CandidateRepository
     public function getCandidatesWithInfo()
     {
         return $this->candidate
-             ->with(['studentInfo','position'])
-             ->get();
+                    ->with(['studentInfo','position'])
+                    ->get();
+    }
+
+    /**
+     * [Group the candidates by position]
+     * @return [type] [description]
+     */
+    public function getCandidatesWithVotesForRank()
+    {
+        $candidates = $this->candidate
+                            ->with(['studentInfo','position:id,name','votes'])
+                            ->get(['id','student_id','position_id']);
+        return $candidates->groupBy('position_id');
     }
 
     /**
@@ -75,7 +102,7 @@ class CandidateRepository
     public function createCandidate(array $information) : Candidate
     {
         $this->changeProfile($information);
-        //check is set and override the profile name
+        //check if set and override the profile name
         $information['profile'] = !empty($information['profile'])
         ? $information['profile']->getClientOriginalName() : 'no_image.png';
         return $this->candidate

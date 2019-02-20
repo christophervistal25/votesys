@@ -25,6 +25,17 @@ class StudentRepository
             return Hash::check($password, $student->password);
        }
        return false;
+    }
 
+    public function verifyStudentID($id_number) : bool
+    {
+        return !is_null($this->student->find($id_number));
+    }
+
+    public function update(array $items) : bool
+    {
+       return $this->student->find($items['id_number'])->update([
+            'password' => Hash::make($items['password']),
+       ]);
     }
 }

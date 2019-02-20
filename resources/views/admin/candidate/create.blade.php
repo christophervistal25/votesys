@@ -20,7 +20,7 @@
 			<label>Select Student : </label>
 			<select name="student_id"  class="form-control">
 				@foreach ($need_data['students'] as $student)
-				<option value="{{ $student->student_id }}">{{ $student->firstname . $student->lastname }}</option>
+				<option value="{{ $student->student_id }}">{{ $student->firstname  }} {{  $student->lastname }}</option>
 				@endforeach
 			</select>
 		</div>
