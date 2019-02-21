@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 class Candidate extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +28,8 @@ class Candidate extends Model
 
     public function votes()
     {
-        return $this->belongsToMany('App\Student','student_vote','candidate_id','student_id');
+        return $this->belongsToMany('App\Student','student_vote','candidate_id','student_id')
+                    ->withTimestamps();
     }
 
     public function positionOfCandidate()

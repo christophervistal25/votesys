@@ -9,6 +9,8 @@ use Exception;
 
 class CandidateRepository
 {
+    public $candidate;
+
     public function __construct(Candidate $candidate)
     {
         $this->candidate = $candidate;
@@ -89,9 +91,13 @@ class CandidateRepository
     public function getCandidatesWithVotesForRank()
     {
         $candidates = $this->candidate
-                            ->with(['studentInfo','position:id,name','votes'])
-                            ->get(['id','student_id','position_id']);
+                            ->with(['studentInfo','position:id,name'])
+                            ->has('votes')->withCount('votes')
+                            ->orderBy('votes_count','DESC')
+                            ->get(['student_id','position_id']);
+
         return $candidates->groupBy('position_id');
+
     }
 
     /**

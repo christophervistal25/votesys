@@ -47,7 +47,7 @@ class CandidateController extends Controller
     public function ranks()
     {
         $candidates = $this->candidateRepository
-                ->getCandidatesWithVotesForRank();
+                            ->getCandidatesWithVotesForRank();
         $positions = $this->positionRepository
                           ->position
                           ->all();

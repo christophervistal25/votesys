@@ -14,7 +14,7 @@ class StudentInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'firstname', 'middlename','lastname','profile'
+        'student_id','firstname', 'middlename','lastname','profile'
     ];
 
     public function student()

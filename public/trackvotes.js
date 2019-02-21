@@ -73,7 +73,7 @@ let notifyAdmin = (data) => {
 		},
 		'position'  :'bottom right',
 		'outEffect' :'slideBottom',
-		'sticky':true
+		'delay' : 3000
 	});
 };
 

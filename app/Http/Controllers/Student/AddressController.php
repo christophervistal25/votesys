@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 class AddressController extends Controller
 {
 
-	public function __construct()
-	{
-
-	}
 
 	public function check(Request $request)
 	{

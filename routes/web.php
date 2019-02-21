@@ -4,14 +4,18 @@ use App\Candidate;
 $router->group(['prefix' => 'admin'] , function () use ($router) {
 
 $router->get('dashboard', ['uses' => 'Admin\AdminController@index', 'as' => 'admin.dashboard']);
-$router->post('dashboard', ['uses' => 'Admin\VoteStatusController@update', 'as' => 'votestatus.update']);
+
 $router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
 $router->get('profile', ['uses' => 'Admin\AdminController@show', 'as' => 'profile.show']);
 $router->post('profile', ['uses' => 'Admin\AdminController@update', 'as' => 'profile.update']);
 
+$router->get('students/import', ['uses' => 'Admin\StudentController@import', 'as' => 'student.import']);
+$router->post('students/import', ['uses' => 'Admin\StudentController@process_import', 'as' => 'student.process.import']);
+
 $router->group(['middleware' => 'is_there_candidate'] , function () use ($router) {
         $router->get('candidates', [ 'uses' => 'Admin\CandidateController@index', 'as' => 'candidate.index']);
         $router->get('candidates/rank' , ['uses' => 'Admin\CandidateController@ranks' , 'as' => 'candidate.ranks']);
+        $router->post('dashboard', ['uses' => 'Admin\VoteStatusController@update', 'as' => 'votestatus.update']);
 });
 
 
@@ -43,12 +47,16 @@ $router->post('/', ['uses' => 'Admin\AuthController@checkUser', 'as' => 'submit.
 
 
 $router->group(['prefix' => 'api'] , function () use ($router) {
+    //in production add the student/login routers to is_voting_middleware
     $router->post('/student/login', ['uses' => 'Student\AuthController@login', 'as' => 'student.login']);
+    $router->get('/student/{id}',['uses' => 'Student\InfoController@show', 'as' => 'student.info']);
     $router->post('/student/register', ['uses' => 'Student\AuthController@register', 'as' => 'student.register']);
     $router->post('/check/mac',['uses' => 'Student\AddressController@check' , 'as' => 'student.checkmac']);
 
-    $router->get('/candidates',['uses' => 'Student\CandidatesController@candidates' , 'as' => 'candidates.list']);
-    $router->post('/student/vote/',['uses' => 'Student\VoteController@vote', 'as' => 'student.vote']);
+    $router->group(['middleware' => 'is_voting_open'] , function () use ($router) {
+        $router->get('/candidates',['uses' => 'Student\CandidatesController@candidates' , 'as' => 'candidates.list']);
+        $router->post('/student/vote/',['uses' => 'Student\VoteController@vote', 'as' => 'student.vote']);
+    });
 });
 
 

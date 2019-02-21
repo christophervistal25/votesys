@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Repositories\StudentVoteRepository;
+use App\Http\Requests\StudentVoteRequest;
+use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
@@ -12,8 +14,9 @@ class VoteController extends Controller
 		$this->studentVoteRepo = $studentVoteRepo;
 	}
 
-	public function vote(Request $reques)
+	public function vote(StudentVoteRequest $request)
 	{
-		return $this->studentVoteRepo->vote();
+		return $this->studentVoteRepo
+					->vote($request->all());
 	}
 }

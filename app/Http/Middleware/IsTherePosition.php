@@ -25,9 +25,9 @@ class IsTherePosition
             flushMessage('status');
             return $next($request);
         } else {
-            if (strpos(URL::current(), '/admin/candidate/create') !== false) {
+            // if (strpos(URL::current(), '/admin/candidate/create') !== false) {
                 setFlashMessage('status','Please add some position first.');
-            }
+            // }
             return redirect()->route('admin.dashboard');
         }
     }

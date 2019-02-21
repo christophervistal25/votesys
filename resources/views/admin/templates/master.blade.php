@@ -55,7 +55,12 @@
 								<h3>General</h3>
 								<ul class="nav side-menu">
 									<li><a href="/admin/dashboard" class="text-capitalize"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-									<li><a href="/admin/students" class="text-capitalize"><i class="fa fa-user"></i>Students</a></li>
+										<li><a><i class="fa fa-table"></i>Students<span class="fa fa-chevron-down"></span></a>
+											<ul class="nav child_menu">
+												<li><a href="/admin/students" class="text-capitalize"><i class="fa fa-user"></i>Students</a></li>
+												<li><a href="/admin/students/import" class="text-capitalize"><i class="fa fa-users"></i>Import</a></li>
+											</ul>
+										</li>
 									@if ($voting_state === 'closed')
 									<li><a><i class="fa fa-users"></i> Candidates <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">

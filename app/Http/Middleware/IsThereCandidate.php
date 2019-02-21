@@ -27,7 +27,7 @@ class IsThereCandidate
             flushMessage('status');
             return $next($request);
         } else {
-            setFlashMessage('status','Please add some candidate first.');
+            setFlashMessage('status','Please add some candidate first .');
             return redirect()->route('admin.dashboard');
         }
     }

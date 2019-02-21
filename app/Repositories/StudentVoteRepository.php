@@ -1,9 +1,15 @@
 <?php
 
 namespace App\Repositories;
+use App\Repositories\CandidateRepository;
 
 class StudentVoteRepository
 {
+
+	public function __construct(CandidateRepository $candidateRepository)
+	{
+		$this->candidateRepository = $candidateRepository;
+	}
 
 	/**
 	 * [the method is local at VoteStatus in Helpers directory]
@@ -24,16 +30,15 @@ class StudentVoteRepository
 	}
 
 	/**
-	 * [Process the request of student to vote]
+	 * [Add vote a candidate]
 	 * @return [type] [description]
 	 */
-	public function vote(array $items) 
+	public function vote(array $items)
 	{
-		if ($this->isVotingOpen()) {
-			//process the request of the student here
-			//for now just display the response json
-			return response()->json(['message' => 'Student can vote'],200);
-		}
-		return response()->json(['message' => 'Sorry! Voting is closed!'],422);
+		// attach the student vote
+		$this->candidateRepository
+			  ->candidate->find($items['candidate_id'])
+			  ->votes()->attach($items['student_id']);
+		 return response()->json(['message' => 'Successfully add your vote.'],200);
 	}
 }
