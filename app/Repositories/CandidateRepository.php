@@ -29,6 +29,14 @@ class CandidateRepository
         return $this->candidate->all();
     }
 
+    public function getAllCandidatesByPosition(int $position_id)
+    {
+        if ($this->isThereAnyCandidate() <= 0) {
+            throw new Exception('There is no candidate.');
+        }
+        return $this->candidate->where('position_id',$position_id)->get();
+    }
+
     /**
      * Check if there's any position in DB
      * @return no of candidates
@@ -97,7 +105,6 @@ class CandidateRepository
                             ->get(['student_id','position_id']);
 
         return $candidates->groupBy('position_id');
-
     }
 
     /**

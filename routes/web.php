@@ -1,5 +1,6 @@
 <?php
 use App\Candidate;
+use App\Student;
 
 $router->group(['prefix' => 'admin'] , function () use ($router) {
 
@@ -54,10 +55,26 @@ $router->group(['prefix' => 'api'] , function () use ($router) {
     $router->post('/check/mac',['uses' => 'Student\AddressController@check' , 'as' => 'student.checkmac']);
 
     $router->group(['middleware' => 'is_voting_open'] , function () use ($router) {
+        $router->get('/positions',['uses' => 'Student\PositionController@list' , 'as' => 'positions.list']);
         $router->get('/candidates',['uses' => 'Student\CandidatesController@candidates' , 'as' => 'candidates.list']);
-        $router->post('/student/vote/',['uses' => 'Student\VoteController@vote', 'as' => 'student.vote']);
+        $router->get('/candidates/{id}',['uses' => 'Student\CandidatesController@candidateInAPosition' , 'as' => 'candidates.in_position.list']);
+        $router->post('/student/vote/',['middleware' => 'is_this_student_can_vote','uses' => 'Student\VoteController@vote', 'as' => 'student.vote']);
     });
 });
+
+$router->group(['prefix' => 'mobile'] , function () use ($router) {
+    $router->get('/candidates/{name}/{voter}',['uses' => 'Student\CandidatesController@candidatesByPositionName']);
+
+   // $router->get('/candidates/{name}',function () {
+   //      return view('mobile.candidates');
+   //  });
+});
+
+
+
+
+
+
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 use App\Repositories\CandidateRepository;
+use App\Repositories\StudentRepository;
 
 class StudentVoteRepository
 {
@@ -41,4 +42,26 @@ class StudentVoteRepository
 			  ->votes()->attach($items['student_id']);
 		 return response()->json(['message' => 'Successfully add your vote.'],200);
 	}
+
+
+	/**
+	 * [Checking if the votes reach the limit for a specific position]
+	 * @param  StudentRepository $studentRepo [description]
+	 * @param  array             $items       [description]
+	 * @return boolean                        [description]
+	 */
+	public function isVoterReachTheLimitForPosition(StudentRepository $studentRepo , array $items = []) :bool
+	{
+		//return information about the candidate
+		   $candidate_position = $this->candidateRepository
+		                              ->candidate
+		                              ->find($items['candidate_id']);
+
+		//get the student vote in position of candidate
+		   $student_no_of_votes = $studentRepo->getStudentVoteInAPosition($candidate_position,$items['student_id']);
+
+		   return  $candidate_position->position->student_can_vote > $student_no_of_votes;
+	}
+
+
 }

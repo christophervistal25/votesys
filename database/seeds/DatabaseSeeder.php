@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call('StudentSeeder');
         $this->call('AdminSeeder');
         $this->call('VoteStatusSeeder');
+        $this->call('PositionSeeder');
+        $this->call('CandidateSeeder');
     }
 }

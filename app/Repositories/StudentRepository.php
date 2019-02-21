@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Repositories;
+use App\Candidate;
 use App\Student;
 use Illuminate\Support\Facades\Hash;
 
 class StudentRepository
 {
+    public $student;
+
     public function __construct(Student $student)
     {
         $this->student = $student;
@@ -37,5 +40,13 @@ class StudentRepository
        return $this->student->find($items['id_number'])->update([
             'password' => Hash::make($items['password']),
        ]);
+    }
+
+    public function getStudentVoteInAPosition($candidate,int $student_id) :int
+    {
+
+        return $this->student->find($student_id)
+                             ->student_vote->where('position_id',$candidate->position->id)
+                             ->count();
     }
 }

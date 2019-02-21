@@ -19,7 +19,12 @@ class IsVotingOpen
         if (getCurrentStateOfVote() === 'open') {
             return $next($request);
         } else {
-            setFlashMessage('status','Whoops! you can\'t proceed to the voting section.');
+            //if the request is came from API
+            if (strpos($_SERVER['REQUEST_URI'],'api') !== false ) {
+                return response()->json(['message' => 'Sorry but the voting is already closed']);
+            } else {
+                setFlashMessage('status','Whoops! you can\'t proceed to the voting section.');
+            }
             return redirect()->route('admin.dashboard');
         }
     }

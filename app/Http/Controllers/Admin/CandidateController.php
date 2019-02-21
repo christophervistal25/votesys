@@ -19,6 +19,7 @@ class CandidateController extends Controller
         $this->positionRepository = $positionRepo;
     }
 
+
     public function index()
     {
         $candidates = $this->candidateRepository

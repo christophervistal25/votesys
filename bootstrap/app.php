@@ -70,6 +70,7 @@ $app->routeMiddleware([
    'is_there_position' => App\Http\Middleware\IsTherePosition::class,
    'is_there_candidate' => App\Http\Middleware\IsThereCandidate::class,
    'is_voting_open' => App\Http\Middleware\IsVotingOpen::class,
+   'is_this_student_can_vote' => App\Http\Middleware\IsStudentCanVote::class,
 ]);
 
 /*

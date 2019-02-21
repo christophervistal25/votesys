@@ -8,10 +8,19 @@
 	<div class="alert alert-danger alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
 		</button>
-		<strong style="color:#fff;">{{ getFlashMessage('errors') }}</strong>
+		<strong style="color:#fff;">{!! getFlashMessage('errors') !!}</strong>
 	</div>
 	@php
 		flushMessage('errors');
+	@endphp
+	@elseif(hasMessage('status'))
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<strong style="color:#fff;">{!! getFlashMessage('status') !!}</strong>
+	</div>
+	@php
+		flushMessage('status');
 	@endphp
 @endif
 <form method="POST" enctype="multipart/form-data">

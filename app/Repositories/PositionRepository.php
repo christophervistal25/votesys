@@ -40,7 +40,7 @@ class PositionRepository
         return $this->position->where('name',$name)->first();
     }
 
-     public function alreadyExists(string $name) :bool
+    public function alreadyExists(string $name) :bool
     {
         return  $this->position
                      ->where('name',$name)

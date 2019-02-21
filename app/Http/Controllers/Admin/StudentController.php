@@ -7,11 +7,13 @@ use App\StudentInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
-use League\Csv\Reader;
-use League\Csv\Statement;
+use Exception;
+use App\Helpers\CSVUploader;
 
 class StudentController extends Controller
 {
+    use CSVUploader;
+
     public function index()
     {
         $students = Student::with('info')->get();
@@ -25,23 +27,25 @@ class StudentController extends Controller
 
     public function process_import(Request $request)
     {
-        //refactor this
-        $csv =   time() . '_' . $request->file('csv')->getClientOriginalName();
-        $request->file('csv')->move(base_path('/public/csv_files'),$csv);
-        $file = file_get_contents(base_path('public/csv_files/'.$csv));
-        $file_array = preg_split("/,|\n/", str_replace("\r", '', $file));
-        $file_array = array_chunk(array_filter($file_array), 5);
-        $student_info = null;
-        $student = null;
-        foreach ($file_array as $key => $value) {
-            $student_info .= "('" . $value[0] ."','". $value[1] ."','". $value[2] ."','". $value[3] ."','". $value[4] . "'),";
-            $student .= "(" . $value[0]."),";
+
+      //reading the csv file
+         $this->setPath(base_path('public/csv_files/'))
+              ->setCsvFileName($request->file('csv'))
+              ->moveFileToPublic()
+              ->readContentFromPublic()
+              ->convertToArrayWithDelimeter("/,|\n/")
+              ->chunkInTo(5);
+
+        try { //inserting the content of csv to database
+            $this->prepareDataForStudentInfo()
+                 ->insertStudentInfoData()
+                 ->insertStudentCrendentials();
+          setFlashMessage('status','Successfully import new data , <a href="/admin/students" style="text-decoration:underline; color:#fff;">Click this link to view</a>');
+        } catch (Exception $e) {
+          setFlashMessage('errors','Please review your CSV, the system detect that some data is already inserted.' . " <a href='/admin/students' style='text-decoration:underline;color:#fff;'>Click this link to proceed in students record.</a>");
         }
-        $student_info = rtrim($student_info,',');
-        $student = rtrim($student,',');
-        $pdo = DB::getPdo();
-        $pdo->exec("INSERT INTO students(`student_id`) VALUES $student");
-        dd($pdo->exec("INSERT INTO student_info(`student_id`,`firstname`,`middlename`,`lastname`,`profile`) VALUES $student_info"));
+
+      return redirect()->route('student.import');
     }
 
 
