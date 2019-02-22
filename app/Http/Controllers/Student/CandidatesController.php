@@ -20,10 +20,8 @@ class CandidatesController extends Controller
 
 	public function candidatesByPositionName(string $position , string  $voter_student_id)
 	{
-
-		$candidatesForThePosition = Candidate::whereHas('position',function ($query) use ($position) {
-				$query->where('name',$position);
-		})->with('studentInfo')->get();
+		$candidatesForThePosition = $this->candidateRepository
+										 ->getAllCandidatesByPositionName($position);
 		return view('mobile.candidates',compact('candidatesForThePosition','voter_student_id'));
 	}
 

@@ -60,6 +60,11 @@ class PositionRepository
       return  $no_of_candidates >= $this->getPositionById($id)->limit;
     }
 
+    public function getOnly(array $columns = [])
+    {
+        return $this->position->get($columns);
+    }
+
     /**
      * Create new position in the database
      * @param array $information

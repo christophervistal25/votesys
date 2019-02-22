@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Repositories\StudentRepository;
 use App\StudentInfo;
+use Illuminate\Http\Request;
 
 class InfoController extends Controller
 {
-	public function show($id_number)
+
+	public function __construct(StudentRepository $studentRepository)
 	{
-		if (StudentInfo::find($id_number)) {
-			return StudentInfo::find($id_number);
-		} else {
-			return response()->json(['message' => 'can\'t find the student.'],422);
-		}
+		$this->studentRepository = $studentRepository;
+	}
+
+	public function show(int $id_number)
+	{
+
+		return $this->studentRepository->getStudentInfo($id_number)
+		?? response()->json(['message' => 'Sorry but the system can\'t find the student.'],422);
 	}
 
 

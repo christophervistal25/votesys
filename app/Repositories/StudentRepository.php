@@ -3,15 +3,17 @@
 namespace App\Repositories;
 use App\Candidate;
 use App\Student;
+use App\StudentInfo;
 use Illuminate\Support\Facades\Hash;
 
 class StudentRepository
 {
     public $student;
 
-    public function __construct(Student $student)
+    public function __construct(Student $student, StudentInfo $student_info)
     {
         $this->student = $student;
+        $this->student_info = $student_info;
     }
 
     /**
@@ -44,9 +46,13 @@ class StudentRepository
 
     public function getStudentVoteInAPosition($candidate,int $student_id) :int
     {
-
         return $this->student->find($student_id)
                              ->student_vote->where('position_id',$candidate->position->id)
                              ->count();
+    }
+
+    public function getStudentInfo(int $id_number)
+    {
+        return $this->student_info->find($id_number);
     }
 }

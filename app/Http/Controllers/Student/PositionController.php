@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
-use App\Position;
+use App\Repositories\PositionRepository;
 
 class PositionController extends Controller
 {
+	public function __construct(PositionRepository $positionRepository)
+	{
+		$this->positionRepository = $positionRepository;
+	}
+
 	public function list()
 	{
-		return Position::get(['name']);
+		return $this->positionRepository->getOnly(['name']);
 	}
 
 }

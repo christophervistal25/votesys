@@ -38,6 +38,18 @@ class CandidateRepository
     }
 
     /**
+     * [Get the list of candidates by position name]
+     * @return [type] [list of all candidates with student info]
+     */
+    public function getAllCandidatesByPositionName(string $position)
+    {
+        return $this->candidate
+                    ->whereHas('position',function ($query) use ($position) {
+                        $query->where('name',$position);
+                    })->with('studentInfo')->get();
+    }
+
+    /**
      * Check if there's any position in DB
      * @return no of candidates
      */
