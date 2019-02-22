@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Repositories\CandidateRepository;
 use App\Repositories\StudentRepository;
 
-class StudentVoteRepository
+class StudentVoteRepository 
 {
 
 	public function __construct(CandidateRepository $candidateRepository)

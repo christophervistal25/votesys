@@ -26,9 +26,11 @@ class AuthController extends Controller
         $isAuthorize = $this->adminRepo
                             ->verify($request->username,$request->password);
         if ($isAuthorize) {
+            setFlashMessage('status','Welcome Administrator ' . $request->username);
             return redirect()->route('admin.dashboard');
         } else {
-            dd('Please check your username or password');
+            setFlashMessage('errors','Please check your username or password');
+            return redirect()->route('login');
         }
     }
 }

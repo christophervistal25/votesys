@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@include('admin.templates.header')
+{{-- <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,7 +27,7 @@
 		<link href="{{ URL::asset('nprogress/nprogress.css') }}" rel="stylesheet">
 		<!-- Custom Theme Style -->
 		<link href="{{ URL::asset('custom.min.css') }}" rel="stylesheet">
-	</head>
+	</head> --}}
 	<body class="nav-md">
 		<div class="container body">
 			<div class="main_container">
@@ -161,9 +162,9 @@
 <script src="{{ URL::asset('fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ URL::asset('nprogress/nprogress.js') }}"></script>
 <script src="{{ URL::asset('js/custom.min.js') }}"></script>
+<script src="//cdn.jsdelivr.net/jquery.amaran/0.5.4/jquery.amaran.min.js"></script>
 	@if ($voting_state === 'open')
 		<script src="{{ URL::asset('trackvotes.js') }}"></script>
 	@endif
-<script src="//cdn.jsdelivr.net/jquery.amaran/0.5.4/jquery.amaran.min.js"></script>
 </body>
 </html>

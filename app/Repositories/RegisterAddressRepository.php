@@ -17,5 +17,10 @@ class RegisterAddressRepository
         return !is_null($this->register_address->find($mac_address));
     }
 
+    public function create(array $items = [])
+    {
+    	$this->register_address->create(['mac_address' => $items['mac_address']]);
+    }
+
 
 }
