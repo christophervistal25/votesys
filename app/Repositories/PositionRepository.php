@@ -15,8 +15,9 @@ class PositionRepository
         $this->candidateRepository = $candidateRepo;
     }
 
+
     /**
-     * Check if there's any position in DB
+     * [Is there available position]
      * @return boolean [description]
      */
     public function isThereAnyPosition() : int
@@ -26,20 +27,31 @@ class PositionRepository
 
 
     /**
-     * Get the information of the position by id
-     * @param integer $id
-     * @return Position
+     * [Get the a specific position by it's PK id]
+     * @param  int    $id      [description]
+     * @param  array  $columns [description]
+     * @return [type]          [description]
      */
-    public function getPositionById(int $id) : Position
+    public function getPositionById(int $id,$columns = []) : Position
     {
-      return $this->position->find($id);
+      return $this->position->find($id,$columns);
     }
 
+    /**
+     * [Get the a specific position by it's name]
+     * @param  string $name [description]
+     * @return [type]       [description]
+     */
     public function getPositionByName(string $name) : Position
     {
         return $this->position->where('name',$name)->first();
     }
 
+    /**
+     * [Checking if the position is already exists]
+     * @param  string $name [description]
+     * @return [type]       [description]
+     */
     public function alreadyExists(string $name) :bool
     {
         return  $this->position
@@ -48,41 +60,50 @@ class PositionRepository
     }
 
     /**
-     * Check if the number of candidates reach
-     * the maximum for the position
-     * @param integer $id
-     * @return boolean
+     * [Is the number of candidates reach the maximum no. for a position]
+     * @param  int     $id [description]
+     * @return boolean     [description]
      */
     public function isPositionReachLimit(int $id)
     {
+     //getting the no. of candidates in position
       $no_of_candidates = $this->candidateRepository
                                 ->getNoOfCandidateByPositionId($id);
+
+     //get the limit of the position and compare to the no.of candidates
       return  $no_of_candidates >= $this->getPositionById($id)->limit;
     }
 
+    /**
+     * []
+     * @param  array  $columns [description]
+     * @return [type]          [description]
+     */
     public function getOnly(array $columns = [])
     {
         return $this->position->get($columns);
     }
 
+
     /**
-     * Create new position in the database
-     * @param array $information
-     * @return Position
+     * [Create new position]
+     * @param  array  $information [description]
+     * @return [type]              [description]
      */
     public function createNewPosition(array $information) : Position
     {
+         //remove all whitespace
          $information['name'] = str_replace(' ','',$information['name']);
+
          return $this->position->create($information);
     }
 
 
-    /**
-     * Update a position
-     *
-     * @param integer $id
-     * @param array $info
-     * @return boolean
+     /**
+     * [Update a position]
+     * @param  int    $id   [description]
+     * @param  array  $info [description]
+     * @return [type]       [description]
      */
     public function updatePosition(int $id , array $info) : bool
     {
@@ -91,14 +112,14 @@ class PositionRepository
     }
 
      /**
-      * Check if the position is in the database if so delete it
-      * @param integer $id
-      * @return void
+      * [Check first if there's a position in database that the user request to delete]
+      * @param  int    $id [description]
+      * @return [type]     [description]
       */
     public function deletePosition(int $id)
     {
 
-      if(!is_null($this->getPositionById($id))) {
+      if(!is_null($this->getPositionById($id,['id']))) {
           return $this->position->destroy($id);
       }
 

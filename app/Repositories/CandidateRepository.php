@@ -3,9 +3,10 @@
 namespace App\Repositories;
 use App\Candidate;
 use App\Position;
+use App\Repositories\PositionRepository;
 use App\Student;
-use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class CandidateRepository
 {
@@ -21,19 +22,27 @@ class CandidateRepository
      * [Fetch all candidates]
      * @return [type] [description]
      */
-    public function getAllCandidates()
+    public function getAllCandidates(array $columns = [])
     {
+        //checking if there's candidate
         if ($this->isThereAnyCandidate() <= 0) {
             throw new Exception('There is no candidate.');
         }
-        return $this->candidate->all();
+
+        return $this->candidate->get();
     }
 
+    /**
+     * [Fetching all candidates by position]
+     * @param  int    $position_id [description]
+     * @return [type]              [description]
+     */
     public function getAllCandidatesByPosition(int $position_id)
     {
         if ($this->isThereAnyCandidate() <= 0) {
             throw new Exception('There is no candidate.');
         }
+
         return $this->candidate->where('position_id',$position_id)->get();
     }
 
@@ -44,19 +53,19 @@ class CandidateRepository
     public function getAllCandidatesByPositionName(string $position)
     {
         return $this->candidate
-                    ->whereHas('position',function ($query) use ($position) {
-                        $query->where('name',$position);
-                    })->with('studentInfo')->get();
+                    ->whereHas('position',function ($query) use ($position)
+                     { $query->where('name',$position); })->with('studentInfo')->get();
     }
 
     /**
-     * Check if there's any position in DB
-     * @return no of candidates
+     * [Check if there's any position]
+     * @return boolean [description]
      */
     public function isThereAnyCandidate() :int
     {
         return $this->candidate->count();
     }
+
     /**
      * Checking if the candidate is already exists
      * @param integer $student_id_number
@@ -69,11 +78,11 @@ class CandidateRepository
                                ->exists();
     }
 
+
     /**
-     * Get the no. of candidates
-     *
-     * @param integer $id
-     * @return integer
+     * [Get the no. of candidates by position ID]
+     * @param  int    $id [description]
+     * @return [type]     [description]
      */
     public function getNoOfCandidateByPositionId(int $id) :int
     {
@@ -82,8 +91,8 @@ class CandidateRepository
     }
 
     /**
-     * Get all candidates with votes
-     * @return boolean
+     * [Get all candidates with votes]
+     * @return [type] [description]
      */
     public function candidatesWithVote()
     {
@@ -93,9 +102,8 @@ class CandidateRepository
     }
 
     /**
-     * Get all candidate with information
-     *
-     * @return void
+     * [Get all candidates with information and the position that their running]
+     * @return [type] [description]
      */
     public function getCandidatesWithInfo()
     {
@@ -105,7 +113,7 @@ class CandidateRepository
     }
 
     /**
-     * [Group the candidates by position]
+     * [Group the candidates by position and getting the count of votes]
      * @return [type] [description]
      */
     public function getCandidatesWithVotesForRank()
@@ -120,22 +128,25 @@ class CandidateRepository
     }
 
     /**
-     * Create new candidate
-     * @param array $information
-     * @return Candidate
+     * [Create new candidate]
+     * @param  array  $information [description]
+     * @return [type]              [description]
      */
     public function createCandidate(array $information) : Candidate
     {
+        //add profile for candidate
         $this->changeProfile($information);
-        //check if set and override the profile name
+
+        //check if there's uploaded image otherwise set a default image
         $information['profile'] = !empty($information['profile'])
         ? $information['profile']->getClientOriginalName() : 'no_image.png';
+
         return $this->candidate
                     ->create($information);
     }
 
     /**
-     * [isAdminWantToChangeProfile if the admin want to change profile]
+     * [Move the Uploaded image of candidate to a folder]
      * @param  [type]  $items [description]
      * @return boolean        [description]
      */

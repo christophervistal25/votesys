@@ -25,11 +25,10 @@ class AdminRepository
     }
 
     /**
-     * Check the user credentials
-     *
-     * @param string $username
-     * @param string $password
-     * @return boolean
+     * [Check the Admin credentials]
+     * @param  string $username [description]
+     * @param  string $password [description]
+     * @return [type]           [description]
      */
     public function verify(string $username , string $password) : bool
     {
@@ -41,7 +40,7 @@ class AdminRepository
     }
 
     /**
-     * [update the information of admin depending on request type]
+     * [Update the information of admin depending on request type]
      * @param  string $method [description]
      * @param  array  $items  [description]
      * @return [type]         [description]
@@ -53,26 +52,36 @@ class AdminRepository
     }
 
     /**
-     * [isAdminWantToChangeProfile if the admin want to change profile]
+     * [Checking if the admin want to change profile]
      * @param  [type]  $items [description]
      * @return boolean        [description]
      */
     private function isAdminWantToChangeProfile($items)
     {
         if (isset($items['profile'])) {
+
+            //getting the image name
             $image = $items['profile']->getClientOriginalName();
+
+            //updating the profile of admin
             getAdminInfo()->update(['profile' => $image]);
+
+            //move the uploaded image to a folder
             $items['profile']->move(base_path('/public/images'),$image);
+
         }
     }
 
     /**
-     * [changeInformation change the admin info]
+     * [Change the Admin information]
      * @return [type] [description]
      */
     private function changeInformation(array $items = []) : bool
     {
+        //get information of admin by it's INFO_ID
         $admin = getAdminCredentials(['admin_info_id']);
+
+        //update
         return $this->adminInfo->where('id',$admin->admin_info_id)->update([
             'firstname'  => $items['firstname'],
             'middlename' => $items['middlename'],
@@ -80,16 +89,32 @@ class AdminRepository
         ]);
     }
 
+    /**
+     * [Changing admin username]
+     * @param  array  $items [description]
+     * @return [type]        [description]
+     */
     private function changeUsername(array $items = []) : bool
     {
+        //get admin username
         $admin = getAdminCredentials(['username']);
+
+        //update
         return $this->getInfoByUsername($admin->username)
                     ->update($items);
     }
 
+    /**
+     * [Changing password of the admin]
+     * @param  array  $items [description]
+     * @return [type]        [description]
+     */
     private function changePassword(array $items = [])
     {
+        //get the username of admin
         $admin = getAdminCredentials(['username']);
+        
+        //get information using it's username and update password
         return $this->getInfoByUsername($admin->username)
                     ->update(['password' => Hash::make($items['new_password'])]);
     }

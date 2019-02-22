@@ -16,7 +16,6 @@ class InfoController extends Controller
 
 	public function show(int $id_number)
 	{
-
 		return $this->studentRepository->getStudentInfo($id_number)
 		?? response()->json(['message' => 'Sorry but the system can\'t find the student.'],422);
 	}
