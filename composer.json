@@ -30,7 +30,8 @@
             "app/Helpers/AdminHelper.php",
             "app/Helpers/Response.php",
             "app/Helpers/CSVReader.php",
-            "app/Helpers/CSVUploader.php"
+            "app/Helpers/CSVUploader.php",
+            "app/Helpers/AdminSessionHelper.php"
         ]
     },
     "autoload-dev": {

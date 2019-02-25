@@ -1,11 +1,10 @@
 <?php
-use App\Candidate;
-use App\Student;
 
-$router->group(['prefix' => 'admin'] , function () use ($router) {
+$router->group(['prefix' => 'admin' ,'middleware' => 'admin.auth'] , function () use ($router) {
 
 $router->get('dashboard', ['uses' => 'Admin\AdminController@index', 'as' => 'admin.dashboard']);
 $router->get('students', ['uses' => 'Admin\StudentController@index', 'as' => 'admin.students']);
+$router->get('logout', ['uses' => 'Admin\AuthController@logout', 'as' => 'admin.logout']);
 
 $router->get('profile', ['uses' => 'Admin\AdminController@show', 'as' => 'profile.show']);
 $router->post('profile', ['uses' => 'Admin\AdminController@update', 'as' => 'profile.update']);
@@ -40,7 +39,7 @@ $router->group(['middleware' => 'is_there_position'] , function () use ($router)
     $router->get('newvotes', ['uses' => 'Admin\VotingController@getNewVotes', 'as' => 'voting.show']);
 });
 
-$router->get('/', ['uses' => 'Admin\AuthController@showLogin', 'as' => 'login']);
+$router->get('/', ['uses' => 'Admin\AuthController@showLogin' , 'as' => 'login']);
 $router->post('/', ['uses' => 'Admin\AuthController@checkUser', 'as' => 'submit.login']);
 
 
@@ -51,6 +50,7 @@ $router->group(['prefix' => 'api'] , function () use ($router) {
     //in production add the student/login routers to is_voting_middleware
     $router->post('/student/login', ['uses' => 'Student\AuthController@login', 'as' => 'student.login']);
     $router->get('/student/{id}',['uses' => 'Student\InfoController@show', 'as' => 'student.info']);
+    $router->post('/student/changepassword',['uses' => 'Student\InfoController@changePassword','as' => 'student.changepassword']);
     $router->post('/student/register', ['uses' => 'Student\AuthController@register', 'as' => 'student.register']);
     $router->post('/check/mac',['uses' => 'Student\AddressController@check' , 'as' => 'student.checkmac']);
 
@@ -62,6 +62,8 @@ $router->group(['prefix' => 'api'] , function () use ($router) {
 
 
     });
+
+
 
         $router->group(['prefix' => 'mobile','middleware' => 'is_voting_open'] , function () use ($router) {
             $router->get('/candidates/{name}/{voter}',['uses' => 'Student\CandidatesController@candidatesByPositionName']);

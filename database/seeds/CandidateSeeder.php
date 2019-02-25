@@ -29,5 +29,11 @@ class CandidateSeeder extends Seeder
         	'position_id' => 2,
         	'platforms' => 'Free wifi',
         ]);
+
+        Candidate::create([
+            'student_id' => 1501758,
+            'position_id' => 2,
+            'platforms' => 'Free wifi',
+        ]);
     }
 }

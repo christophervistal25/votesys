@@ -7,7 +7,7 @@ use App\RegisteredAddress;
 class RegisterAddressRepository
 {
 
-    public function __construct(RegisteredAddress $register_addess)
+    public function __construct(RegisteredAddress $register_address)
     {
         $this->register_address = $register_address;
     }

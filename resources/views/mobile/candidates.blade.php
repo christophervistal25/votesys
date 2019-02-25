@@ -13,18 +13,25 @@
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script>
 	$(document).on('click','#candidate' , function() {
+		/*REMEMBER THAT YOU CAN'T USE ES6 HERE CAUSE
+		 IT WILL RESULT AN ERROR IN MOBILE WEB VIEW*/
 		var candidateId = $(this).attr('candidate-id');
 		var confirmVote = confirm('Do you want to vote ' + $(this).attr('candidate-name'));
 		if(confirmVote) {
 		$.ajax({
 			  type: "POST",
 			  url: "/api/student/vote?student_id=" + {{ $voter_student_id }} + "&candidate_id="+candidateId,
-			  success: function (data) {
-			  		alert('Successfully vote');
+			  success: function (data)  {
+				  	location.reload(false);
+				  	alert('Successfully vote');
+			  },
+			  error: function (data) {
+			  	 if(data.status == 422) {
+			  	 	var errors = $.parseJSON(data.responseText);
+			  	 	alert("Opps! " + errors.message);
+			  	 }
 			  }
 			});
-		} else {
-			alert('Please vote wisely.');
 		}
 	});
 </script>

@@ -49,14 +49,14 @@ class StudentRepository
     }
 
     /**
-     * [Update student login credenatisl]
+     * [Update student login credentials]
      * @param  array  $items [description]
      * @return [type]        [description]
      */
     public function update(array $items) : bool
     {
        return $this->student
-                    ->find($items['id_number'],['password'])
+                    ->find($items['id_number'])
                     ->update(['password' => Hash::make($items['password'])]);
     }
 

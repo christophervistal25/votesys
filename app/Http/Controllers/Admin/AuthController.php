@@ -27,10 +27,21 @@ class AuthController extends Controller
                             ->verify($request->username,$request->password);
         if ($isAuthorize) {
             setFlashMessage('status','Welcome Administrator ' . $request->username);
+            $_SESSION['login'] = true;
             return redirect()->route('admin.dashboard');
         } else {
             setFlashMessage('errors','Please check your username or password');
             return redirect()->route('login');
         }
+    }
+
+    public function logout()
+    {
+
+        if (session_id() == null) {
+            session_start();
+        }
+        session_destroy();
+        return redirect()->route('login');
     }
 }

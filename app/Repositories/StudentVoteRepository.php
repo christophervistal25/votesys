@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Repositories\CandidateRepository;
 use App\Repositories\StudentRepository;
 
-class StudentVoteRepository 
+class StudentVoteRepository
 {
 
 	public function __construct(CandidateRepository $candidateRepository)
@@ -12,6 +12,7 @@ class StudentVoteRepository
 		$this->candidateRepository = $candidateRepository;
 	}
 
+//note move this into VoteRepository
 	/**
 	 * [the method is local at VoteStatus in Helpers directory]
 	 * @return [type] [description]
@@ -20,6 +21,7 @@ class StudentVoteRepository
 	{
 		return getCurrentStateOfVote();
 	}
+
 
 	/**
 	 * [Checking the voting state if open]

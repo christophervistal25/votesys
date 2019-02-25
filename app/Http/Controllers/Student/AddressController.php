@@ -19,6 +19,6 @@ class AddressController extends Controller
 		$isMacAddressAlreadyRegistered = $this->registerAddressRepository
 											  ->studentCheckMacAddress($request->mac_address);
 		$responseCode = ($isMacAddressAlreadyRegistered) ? 422 : 200;
-		return response()->json(['registered' => $is_already_register],$responseCode);
+		return response()->json(['registered' => $isMacAddressAlreadyRegistered],$responseCode);
 	}
 }

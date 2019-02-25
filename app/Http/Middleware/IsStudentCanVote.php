@@ -28,7 +28,7 @@ class IsStudentCanVote
         if ($isVoterReachTheLimitForPosition) {
             return $next($request);
         } else {
-            return response()->json(['message' => 'Sorry, but you already vote to other candidate within this position.']);
+            return response()->json(['message' => 'Sorry, but you already vote to other candidate within this position.'],422);
         }
 
     }

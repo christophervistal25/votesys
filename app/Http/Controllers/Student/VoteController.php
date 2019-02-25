@@ -19,4 +19,5 @@ class VoteController extends Controller
 		return $this->studentVoteRepo
 					->vote($request->all());
 	}
+
 }

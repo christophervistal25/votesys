@@ -21,4 +21,11 @@ class InfoController extends Controller
 	}
 
 
+
+	public function changePassword(Request $request)
+	{
+		if ($this->studentRepository->update($request->all())) {
+			return response()->json(['mesasge' => 'Successfully changed your password'],200);
+		}
+	}
 }
