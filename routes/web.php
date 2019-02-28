@@ -71,6 +71,10 @@ $router->group(['prefix' => 'api'] , function () use ($router) {
 
 });
 
+  $router->get('/testing', function () {
+            echo str_random(32);
+        });
+
 
 
 
